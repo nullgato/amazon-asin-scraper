@@ -1,4 +1,5 @@
 import { JSDOM } from 'jsdom'
+import parse from 'url-parse'
 import { ParserSelectorError } from './errors'
 import { IBookMetadata } from './interfaces/IBookMetadata'
 import { convertClasses, querySelector, stripClassesTree } from './utils'
@@ -109,4 +110,20 @@ const parseBookProduct = (html: string, asin: string): IBookMetadata | null => {
     }
 }
 
-export { parseBookProduct }
+/**
+ * 
+ * @param url The Amazon product url to parse
+ * @returns The url segment containing the ASIN if successful, otherwise null
+ */
+const parseAmazonBookURL = (url: string): string | null => {
+    const parsedUrl = parse(url)
+    const pathSegments = parsedUrl.pathname.split('/')
+
+    for (let i = 0; i < pathSegments.length; i++)
+        if (pathSegments[i] === 'product')
+            return pathSegments[i+1]
+
+    return null
+}
+
+export { parseAmazonBookURL, parseBookProduct }

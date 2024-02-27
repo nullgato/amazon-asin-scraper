@@ -1,6 +1,7 @@
 import readline from 'readline/promises'
 import { getBookMetadata } from './data/book'
 import { IBookMetadata } from './interfaces/IBookMetadata'
+import { parseAmazonBookURL } from './parser'
 
 const readInput = readline.createInterface({
     input: process.stdin,
@@ -9,18 +10,32 @@ const readInput = readline.createInterface({
 
 const run = async () => {
     // TODO: Add ASIN validation regex
-    const asinEntry = await readInput.question('Amazon ASIN: ')
+    // TODO: Support Amazon links
+    const asinEntry = await readInput.question('Amazon ASIN(s) or URL: ')
     const asinCollection: string[] = []
 
-    if (asinEntry.indexOf(',') >= 0)
-        asinEntry.split(',').forEach((asin) => {
-            asinCollection.push(asin)
-        })
-    else asinCollection.push(asinEntry)
+    if (asinEntry.indexOf('https://') >= 0) {
+        const asin = parseAmazonBookURL(asinEntry)
+        if (asin === null) {
+            console.error('Could not parse the ASIN from url, please input ASIN manually')
+            await run()
+            return
+        }
+
+        asinCollection.push(asin)
+    }
+    else {
+        if (asinEntry.indexOf(',') >= 0)
+            asinEntry.split(',').forEach((asin) => {
+                asinCollection.push(asin)
+            })
+        else asinCollection.push(asinEntry)
+    }
 
     const results: Array<IBookMetadata> = []
     const failures: string[] = []
     for (const asin of asinCollection) {
+        console.log(`Getting metadata of: ${asin}...`)
         const result = await getBookMetadata(asin)
         if (result === null) failures.push(asin)
         else results.push(result)
