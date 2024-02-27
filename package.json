@@ -1,0 +1,32 @@
+{
+    "name": "amazon-asin-scraper",
+    "version": "0.0.1",
+    "description": "Scrapes a book's Amazon product page for its metadata",
+    "author": "nullgato",
+    "license": "MIT",
+    "private": true,
+    "engines": {
+        "node": ">=18"
+    },
+    "scripts": {
+        "build": "tsc",
+        "clean": "del-cli dist",
+        "dev": "tsc && node dist/index.js",
+        "lint": "eslint --ext .ts,.tsx . && prettier --ignore-path .eslintignore --check .",
+        "lint:fix": "eslint --ext .ts,.tsx --fix . && prettier --ignore-path .eslintignore --write ."
+    },
+    "devDependencies": {
+        "@types/node": "^20.11.20",
+        "eslint": "^8.57.0",
+        "eslint-config-prettier": "^9.1.0",
+        "prettier": "3.2.5",
+        "typescript": "^5.3.3",
+        "typescript-eslint": "^7.1.0",
+        "@tsconfig/recommended": "^1.0.3",
+        "@types/jsdom": "^21.1.6"
+    },
+    "dependencies": {
+        "dom-parser": "^1.1.5",
+        "jsdom": "^24.0.0"
+    }
+}
