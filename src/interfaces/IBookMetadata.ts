@@ -1,4 +1,5 @@
 interface IBookMetadata {
+    asin: string
     title: string
     author: string
     description: string

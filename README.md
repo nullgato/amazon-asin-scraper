@@ -28,3 +28,10 @@ For now this is just a node terminal application and you will input the ASIN via
 This project uses [TypeScript (TS)](https://www.typescriptlang.org/) which is a superset of JavaScript (JS). These days modern JS is fairly similar to TS making it incredibly easy to get started with. This project includes a transpiler that will process the `.ts` and `.tsx` files located in the `src` directory into JS.
 
 To build the project, run `npm run build` in the terminal. This will transpile the `.ts` files into `dist` folder where you'll see `index.js` which is the entry point of the application. You can then run the application with `node dist/index.js` or combine both the build and run commands with `npm run dev`.
+
+From here the app will ask you for an Amazon ASIN input. This can either be one, or multiple that are comma separated. Valid inputs look like this:
+
+`Amazon ASIN: B0CPN3LC6N`
+`Amazon ASIN: B0CPN3LC6N,B0CQQ3VB8S,B0C1ZPZC1Y`
+
+Keep in mind that the more scraping this app does within a short amount of time, the more likely it is to be flagged as automation and denied access. I do not yet know if this is against the Amazon usage agreement, nor do I know of the potential consequences if it is. I'm not mass-scraping books, I just do a few maximum at a time, once or twice per day.

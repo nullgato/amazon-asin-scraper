@@ -20,7 +20,7 @@ const getBookMetadata = async (asin: string): Promise<IBookMetadata | null> => {
         )
         const html = await response.text()
 
-        const book = parseBookProduct(html)
+        const book = parseBookProduct(html, asin)
         if (book === null) {
             console.error(new DataParserError())
             return null

@@ -1,5 +1,6 @@
 import readline from 'readline/promises'
 import { getBookMetadata } from './data/book'
+import { IBookMetadata } from './interfaces/IBookMetadata'
 
 const readInput = readline.createInterface({
     input: process.stdin,
@@ -7,28 +8,38 @@ const readInput = readline.createInterface({
 })
 
 const run = async () => {
-    const asin = await readInput.question('Amazon ASIN: ')
-    const result = await getBookMetadata(asin)
-    if (result === null) {
-        console.log(
-            '\nThe specified ASIN could not be scraped, please check the console for more information.'
-        )
-        console.log('Consider waiting and trying again if an error occurred.\n')
+    // TODO: Add ASIN validation regex
+    const asinEntry = await readInput.question('Amazon ASIN: ')
+    const asinCollection: string[] = []
 
-        await run()
-        return
+    if (asinEntry.indexOf(',') >= 0)
+        asinEntry.split(',').forEach((asin) => {
+            asinCollection.push(asin)
+        })
+    else asinCollection.push(asinEntry)
+
+    const results: Array<IBookMetadata> = []
+    const failures: string[] = []
+    for (const asin of asinCollection) {
+        const result = await getBookMetadata(asin)
+        if (result === null) failures.push(asin)
+        else results.push(result)
     }
 
-    console.log('\n===== TITLE =====')
-    console.log(result.title)
-    console.log('\n===== AUTHOR =====')
-    console.log(result.author)
-    console.log('\n===== DESCRIPTION TEXT =====')
-    console.log(result.description)
-    console.log('\n===== DESCRIPTION HTML =====')
-    console.log(result.descriptionHtml + '\n')
+    for (const result of results) {
+        console.log(`\n===== Result of ${result.asin} =====`)
+        console.log(result.title)
+        console.log(result.author)
+        console.log('\n===== DESCRIPTION HTML =====')
+        console.log(result.descriptionHtml)
+        console.log('\n===== DESCRIPTION TEXT =====')
+        console.log(result.description + '\n')
+    }
 
-    await run()
+    if (failures.length > 0) {
+        console.log(`\nFailed ASIN(s): ${failures.join(', ')}`)
+        console.log('Consider waiting and trying again if an error occurred.\n')
+    }
 }
 
 run()

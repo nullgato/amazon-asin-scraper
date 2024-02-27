@@ -81,7 +81,7 @@ const parseBookDescription = (
  * @param html The html from the product page
  * @returns The book product's metadata if successful, otherwise null
  */
-const parseBookProduct = (html: string): IBookMetadata | null => {
+const parseBookProduct = (html: string, asin: string): IBookMetadata | null => {
     const dom = new JSDOM(html)
 
     // TODO: Parse to catch captcha error, or possibly other errors
@@ -101,6 +101,7 @@ const parseBookProduct = (html: string): IBookMetadata | null => {
         return null
 
     return {
+        asin,
         title,
         author,
         description: description.rawText,
