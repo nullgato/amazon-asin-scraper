@@ -69,11 +69,30 @@ const parseBookDescription = (
     for (const elem of descriptionDivElem.children)
         stripClassesTree(elem as HTMLElement)
 
+    const processedHtml = descriptionDivElem.innerHTML
+    let rawText = ''
+
+    // TODO: Try to implement complex parsing of nodes for better raw text formatting
+    for (const elem of descriptionDivElem.children) {
+        const tagName = elem.tagName.toLocaleLowerCase()
+        switch (tagName) {
+            case 'p':
+                rawText += `${elem.textContent}\n\n`
+                break
+            case 'br':
+                rawText += '\n'
+                break
+            default:
+                rawText += `${elem.textContent}\n`
+                break
+        }
+    }
+
     // TODO: Maybe parse for errors within the convert/strip functions since success is expected behavior?
 
     return {
-        processedHtml: descriptionDivElem.innerHTML,
-        rawText: descriptionDivElem.textContent,
+        processedHtml,
+        rawText,
     }
 }
 
@@ -111,7 +130,7 @@ const parseBookProduct = (html: string, asin: string): IBookMetadata | null => {
 }
 
 /**
- * 
+ *
  * @param url The Amazon product url to parse
  * @returns The url segment containing the ASIN if successful, otherwise null
  */
@@ -120,8 +139,7 @@ const parseAmazonBookURL = (url: string): string | null => {
     const pathSegments = parsedUrl.pathname.split('/')
 
     for (let i = 0; i < pathSegments.length; i++)
-        if (pathSegments[i] === 'product')
-            return pathSegments[i+1]
+        if (pathSegments[i] === 'product') return pathSegments[i + 1]
 
     return null
 }

@@ -1,6 +1,6 @@
 {
     "name": "amazon-asin-scraper",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "Scrapes a book's Amazon product page for its metadata",
     "author": "nullgato",
     "license": "MIT",

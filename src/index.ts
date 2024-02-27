@@ -17,14 +17,15 @@ const run = async () => {
     if (asinEntry.indexOf('https://') >= 0) {
         const asin = parseAmazonBookURL(asinEntry)
         if (asin === null) {
-            console.error('Could not parse the ASIN from url, please input ASIN manually')
+            console.error(
+                'Could not parse the ASIN from url, please input ASIN manually'
+            )
             await run()
             return
         }
 
         asinCollection.push(asin)
-    }
-    else {
+    } else {
         if (asinEntry.indexOf(',') >= 0)
             asinEntry.split(',').forEach((asin) => {
                 asinCollection.push(asin)
