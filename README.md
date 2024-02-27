@@ -1,6 +1,6 @@
 # Amazon ASIN Scraper
 
-![GitHub package.json version](https://img.shields.io/github/package-json/v/nullgato/amazon-asin-scraper)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/nullgato/amazon-asin-scraper?color=blue)
 [![License](https://img.shields.io/badge/License-MIT-blue)](#license)
 
 This project allows you to input a book's ASIN from Amazon and retrieve the book's metadata by scraping the html page that's returned from their server. I went with the scraping route because Amazon's API doesn't seem adquate to get all potentially relevant information about a book.
