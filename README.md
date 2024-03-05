@@ -7,6 +7,18 @@ This project allows you to input a book's ASIN or product url from Amazon.com (n
 
 It also converts some text classes within the description html into their proper html element such as `.a-text-bold` into `<b></b>`. This is so you can keep the formatting while removing classes that aren't useful since you don't have the stylesheet for it anyway. It then strips the remaining classes so you're left with barebones (and not prettified) html. It does not however make any other additions and if you're using this to fill out a form, the final formatting will be up to your form's interpretation and you may need to make adjustments. I do also make a minimal effort to format the raw text of the description by looping through any elements within it and creating a custom description text with proper line breaks. This does not work for every book and for those you will be better off directly copying the text right from the page.
 
+It also dumps JSON specifically targeted for MAM fast form filling, but may be compatible with others. It dumps the following format:
+
+```
+{
+    title: result.title,
+    authors: [result.author],
+    isbn: 'ASIN:' + result.asin,
+    language: 'English',
+    thumbnail: result.imageUrl
+}
+```
+
 For now this is just a node terminal application and you will input the ASIN via terminal and retrieve the metadata via terminal. Future improvements would be giving a few options for how a user will get their requested data. For example: the terminal, a file output, and an embeded webserver that runs a web-UI for easier data input and copying.
 
 ## Installation

@@ -96,6 +96,10 @@ const parseBookDescription = (
     }
 }
 
+const parseBookImageUrl = (dom: JSDOM): string | null => {
+    return querySelector(dom, '#landingImage')?.getAttribute('src') ?? null
+}
+
 /**
  *
  * @param html The html from the product page
@@ -120,12 +124,16 @@ const parseBookProduct = (html: string, asin: string): IBookMetadata | null => {
     )
         return null
 
+    const imageUrl = parseBookImageUrl(dom)
+    if (imageUrl === null) return null
+
     return {
         asin,
         title,
         author,
         description: description.rawText,
         descriptionHtml: description.processedHtml,
+        imageUrl
     }
 }
 

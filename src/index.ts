@@ -50,6 +50,14 @@ const run = async () => {
         console.log(result.descriptionHtml)
         console.log('\n===== DESCRIPTION TEXT =====')
         console.log(result.description + '\n')
+        console.log('\n===== JSON =====')
+        console.log(JSON.stringify({
+            title: result.title,
+            authors: [result.author],
+            isbn: 'ASIN:' + result.asin,
+            language: 'English',
+            thumbnail: result.imageUrl
+        }) + '\n')
     }
 
     if (failures.length > 0) {

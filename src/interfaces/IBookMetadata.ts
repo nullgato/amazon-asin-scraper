@@ -4,6 +4,7 @@ interface IBookMetadata {
     author: string
     description: string
     descriptionHtml: string
+    imageUrl: string
 }
 
 export { type IBookMetadata }
