@@ -46,6 +46,8 @@ const run = async () => {
         console.log(`\n===== Result of ${result.asin} =====`)
         console.log(result.title)
         console.log(result.author)
+        console.log('\n===== THUMBNAIL URL =====')
+        console.log(result.imageUrl)
         console.log('\n===== DESCRIPTION HTML =====')
         console.log(result.descriptionHtml)
         console.log('\n===== DESCRIPTION TEXT =====')
